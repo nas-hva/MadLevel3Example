@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,21 +19,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
 
-        navController = findNavController(R.id.nav_host_fragment)
-
-        fab.setOnClickListener {
-            navController.navigate(
-                R.id.action_remindersFragment_to_addReminderFragment
-            )
+            navController = findNavController(R.id.nav_host_fragment)
+            fab.setOnClickListener {
+                navController.navigate(
+                    R.id.action_remindersFragment_to_addReminderFragment
+                )
+            }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-        fabToggler()
         return true
     }
 
@@ -45,15 +45,4 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    private fun fabToggler() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id in arrayOf(R.id.addReminderFragment)) {
-                fab.hide()
-            } else {
-                fab.show()
-            }
-        }
-    }
-
 }
